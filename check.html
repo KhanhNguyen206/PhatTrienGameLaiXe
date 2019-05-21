@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="docReady()">
+<div id="game"></div>
+<script>
+    function Pikachu(image, top, left, speed, size) {
+        this.top=top;
+        this.left=left;
+        this.size=size;
+        this.speed=speed;
+        this.direction= "trai";
+
+        this.getPikachuElement = function(){
+            return '<img width="'+ this.size + '"' +
+                ' height="'+ this.size + '"' +
+                ' src="' + this.image +'"' +
+                ' style="top: '+this.top+'px; left:'+this.left+'px;position:absolute;" alt=""/>';
+        };
+
+        this.getDirection=function () {
+            switch (this.direction) {
+                case "trai":
+                    this.getMoveLeft();
+                    break;
+                case "phai":
+                    this.getMoveRight();
+                    break;
+                case "tren":
+                    this.getMoveUp();
+                    break;
+                case "duoi":
+                    this.getMoveDown();
+                    break;
+            }
+        };
+        this.getMoveRight= function () {
+            this.image= image + "-right.png";
+            this.left+=this.speed;
+        };
+
+        this.getMoveLeft=function () {
+            this.image=image + "-left.png";
+            this.left-=this.speed;
+        };
+
+        this.getMoveUp=function () {
+            this.image=image + "-up.png";
+            this.top-=this.speed;
+        };
+
+        this.getMoveDown=function () {
+            this.image=image + "-down.png";
+            this.top+=this.speed;
+        }
+        //     this.getMove=function () {
+        //     if(this.top === 20){
+        //         this.image= image + "-right.png";
+        //         this.left+=this.speed;
+        //     }
+        //     if(this.left === 700){
+        //         this.image=image + "-down.png";
+        //         this.top+=this.speed;
+        //     }
+        //     if(this.top === 700){
+        //         this.image=image + "-left.png";
+        //         this.left-=this.speed;
+        //     }
+        //     if (this.left === 20) {
+        //         this.image=image + "-up.png";
+        //         this.top-=this.speed;
+        //     }
+        // }
+    };
+
+    let pikachu= new Pikachu("pikachu",20,20,20,200);
+    console.log(pikachu);
+
+    let moveSelection= function(e) {
+        switch(e.keyCode){
+            case 38:
+                pikachu.direction ="tren";
+                break;
+            case 40:
+                pikachu.direction="duoi";
+                break;
+            case 37:
+                pikachu.direction="trai";
+                break;
+            case 39:
+                pikachu.direction="phai";
+                break;
+        }
+    };
+    let docReady=function() {
+        window.addEventListener('keydown', moveSelection);
+    };
+    setInterval(function () {
+        document.getElementById("game").innerHTML= pikachu.getPikachuElement();
+        pikachu.getDirection();
+    },50)
+
+</script>
+
+</body>
+</html>
